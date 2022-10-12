@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <title>Tambah Karyawan</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar('karyawan')"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content">
+        <form th:action="@{/karyawan/tambah}" th:object="${karyawan}" method="POST">
+          <table class="table table-borderless">
+            <thead>
+              <th class="pb-5">
+                <h2>Tambah Karyawan</h2>
+              </th>
+            </thead>
+            <br>
+            <tbody>
+              <tr>
+                <td>
+                  <h3>Nama Karyawan</h3>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input class="form-control" type="text" placeholder="Nama Depan" th:field="*{namaDepan}"/>
+                </td>
+                <td>
+                  <input class="form-control" type="text" placeholder="Nama Belakang" th:field="*{namaBelakang}"/>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <h3>Email</h3>
+                </td>
+                <td>
+                  <h3>Tanggal Lahir</h3>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input class="form-control" placeholder="Email" type="text" th:field="*{email}"/>
+                </td>
+                <td>
+                  <input required class="form-control" placeholder="Tanggal lahir" type="date" th:field="*{tanggalLahir}" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <h3>Jenis Kelamin</h3>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <select class="form-control" name="jenisKelamin" th:field="*{jenisKelamin}">
+                    <option value="1">Laki-laki</option>
+                    <option value="2">Perempuan</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <h2>Daftar Sertifikasi</h2>
+                </td>
+              </tr>
+              <tr th:each="sertifikasi, iterationStatus : *{listSertifikasiKaryawan}">
+                <td>
+                  <select name="sertifikasi" th:field="*{listSertifikasiKaryawan[__${iterationStatus.index}__].sertifikasi.idSertifikasi}"
+                          class="form-control">
+                    <div th:each="sertifikasiEx, iterationStatus2 : ${listSertifikasiExisting}">
+                      <option th:value="${sertifikasiEx.idSertifikasi}" th:text="${sertifikasiEx.nama}"></option>
+                    </div>
+                  </select>
+                </td>
+                <td>
+                  <input required class="form-control" placeholder="Tanggal Pengambilan" type="date" th:field="*{listSertifikasiKaryawan[__${iterationStatus.index}__].tanggalPengambilan}" />
+                </td>
+                <td>
+                  <button th:value="${iterationStatus.index}" class="btn btn-danger" type="submit"
+                          name="deleteRowSertifikasi">Hapus</button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <button class="btn btn-primary" type="submit" name="addRowSertifikasi">+ Tambah Sertifikasi</button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="row">
+                    <div class="col">
+                      <button class="btn btn-primary" type="submit" name="save">Submit</button>
+                    </div>
+                    <div class="col">
+                      <a class="btn btn-primary" href="/">Home</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

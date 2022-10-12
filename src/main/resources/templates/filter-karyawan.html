@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Filter Karyawan</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar('karyawan')"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <form th:action="@{/filter-sertifikasi}" method="POST">
+          <div class="form-group">
+            <label style="font-family: 'Arial'"><b>Pilih Sertifikasi</b></label>
+            <select id="namaSertifikasi" class="form-control" th:value="${idSertifikasi}" th:name="id-sertifikasi">
+              <option hidden >Nama Sertifikasi</option>
+              <option th:each="sertifikasi : ${listSertifikasiExisting}" th:value="${sertifikasi.idSertifikasi}" th:text="${sertifikasi.nama}"></option>
+            </select>
+          </div>
+          <br>
+          <div class="d-flex justify-content-center">
+            <button  type="submit" class="btn btn-danger w-25">Cari</button>
+          </div>
+        </form>
+        <h2>Daftar Karyawan</h2>
+        <br>
+        <br>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>Email</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="karyawan, iterationStatus : ${listKaryawan}">
+            <td th:text="${iterationStatus.index+1}"></td>
+            <td th:text="${karyawan.namaDepan}+' '+${karyawan.namaBelakang}"></td>
+            <td th:text="${karyawan.email}"></td>
+
+            <td>
+              <div>
+                <a class="btn btn-sm btn-primary" th:href="@{/karyawan/} + ${karyawan.idKaryawan}">Detail</a>
+                <a class="btn btn-sm btn-primary" th:href="@{/karyawan/} + ${karyawan.idKaryawan} + @{/insentif}">Insentif</a>
+              </div>
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+        <hr>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>

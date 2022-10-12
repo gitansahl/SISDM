@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <title>Tambah Presensi</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar('presensi')"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content">
+        <form th:action="@{/presensi/tambah}" th:object="${presensi}" method="POST">
+          <table class="table table-borderless">
+            <thead>
+            <th class="pb-5">
+              <h2>Tambah Presensi</h2>
+            </th>
+            </thead>
+            <br>
+            <tbody>
+            <tr>
+              <td>
+                <h3>Nama Karyawan</h3>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <select name="karyawan" th:field="*{karyawan.idKaryawan}" class="form-control">
+                  <div th:each="karyawanEx, iterationStatus : ${listKaryawanExisting}">
+                    <option th:value="${karyawanEx.idKaryawan}" th:text="${karyawanEx.namaDepan} + ' ' + ${karyawanEx.namaBelakang}"></option>
+                  </div>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h3>Tanggal</h3>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <input required class="form-control" placeholder="Tanggal Presensi" type="date" th:field="*{tanggal}" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h3>Waktu Masuk</h3>
+              </td>
+              <td>
+                <h3>Waktu Keluar</h3>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input required class="form-control" placeholder="Waktu Masuk" type="time" th:field="*{waktuMasuk}" />
+              </td>
+              <td>
+                <input required class="form-control" placeholder="Waktu Keluar" type="time" th:field="*{waktuKeluar}" />
+              </td>
+            </tr>
+            <div th:if="${listTugasExisting.size()} <= 0">
+              <tr>
+                <td>
+                  <h2>Tidak ada tugas yang bisa dikerjakan</h2>
+                </td>
+              </tr>
+            </div>
+            <div th:unless="${listTugasExisting.size()} <= 0">
+              <tr>
+                <td>
+                  <h2>Daftar Sertifikasi</h2>
+                </td>
+              </tr>
+              <tr th:each="tugas, iterationStatus : *{listTugas}">
+                <td>
+                  <select name="tugas" th:field="*{listTugas[__${iterationStatus.index}__].idTugas}"
+                          class="form-control">
+                    <div th:each="tugasEx, iterationStatus2 : ${listTugasExisting}">
+                      <option th:value="${tugasEx.idTugas}" th:text="${tugasEx.nama}"></option>
+                    </div>
+                  </select>
+                </td>
+                <td>
+                  <select name="status" th:field="*{listTugas[__${iterationStatus.index}__].status}"
+                          class="form-control">
+                    <option th:value="0">Dimulai</option>
+                    <option th:value="1">Dikerjakan</option>
+                    <option th:value="2">Selesai</option>
+                  </select>
+                </td>
+                <td>
+                  <button th:value="${iterationStatus.index}" class="btn btn-danger" type="submit"
+                          name="deleteRowTugas">Hapus</button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <button class="btn btn-primary" type="submit" name="addRowTugas">+ Tambah Tugas</button>
+                </td>
+              </tr>
+            </div>
+            <tr>
+              <td>
+                <div class="row">
+                  <div class="col">
+                    <button class="btn btn-primary" type="submit" name="save">Submit</button>
+                  </div>
+                  <div class="col">
+                    <a class="btn btn-primary" href="/">Home</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

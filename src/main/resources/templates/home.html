@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Beranda</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar('home')"></nav>
+<div class="d-flex justify-content-center">
+    <div class="m-4">
+        <div class="col">
+            <div class="row">
+                <h2>Welcome to SI-SDM</h2>
+            </div>
+            <div class="row">
+                <h2>List of Features:</h2>
+            </div>
+            <div class="row">
+                <a th:href="@{/karyawan}" class="mx-2 btn btn-primary">Karyawan</a>
+                <a th:href="@{/presensi}" class="mx-2 btn btn-primary">Presensi</a>
+                <a th:href="@{/tugas/tambah}" class="mx-2 btn btn-primary">Tambah Tugas</a>
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle"  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Filter
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" th:href="@{/filter-tugas}">Cari tugas berdasarkan karyawan yang memiliki status tertentu</a>
+                        <a class="dropdown-item" th:href="@{/filter-sertifikasi}">Cari karyawan berdasarkan sertifikat</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

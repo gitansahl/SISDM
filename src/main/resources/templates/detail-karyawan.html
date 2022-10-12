@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Detail Karyawan</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar('karyawan')"></nav>
+<div class="container">
+  <div class="justify-content-center">
+    <a th:href="@{/karyawan}">Back</a>
+    <h2>Detail Karyawan</h2>
+    <a class="btn btn-warning" th:href="@{/karyawan/} + ${karyawan.idKaryawan} + @{/ubah}">Edit</a>
+    <form th:action="@{/karyawan/} + ${karyawan.idKaryawan} + @{/hapus}" method="POST">
+      <button  type="submit" class="btn btn-danger">Hapus</button>
+    </form>
+  </div>
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+      <table class="table table-borderless">
+        <tr>
+          <td>
+            <div>
+              <h4>Nama</h4>
+            </div>
+            <div>
+              <p th:text="${karyawan.namaDepan} + ' ' + ${karyawan.namaBelakang}"></p>
+            </div>
+          </td>
+          <td>
+            <div>
+              <h4>Jenis Kelamin</h4>
+            </div>
+            <div>
+              <p th:if="${karyawan.jenisKelamin} == 1">Laki-laki</p>
+              <p th:unless="${karyawan.jenisKelamin} == 1">Perempuan</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div>
+              <h4>Tanggal Lahir</h4>
+            </div>
+            <div>
+              <p th:text="${#temporals.format(karyawan.tanggalLahir,'d MMMM yyyy')}"></p>
+            </div>
+          </td>
+          <td>
+            <div>
+              <h4>Email</h4>
+            </div>
+            <div>
+              <p th:text="${karyawan.email}"></p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <table class="table-striped">
+              <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama Sertifikasi</th>
+                <th>No Sertifikasi</th>
+                <th>Tanggal Pengambilan</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="sertifikasiKaryawan, iterationStatus : ${karyawan.listSertifikasiKaryawan}">
+                <td th:text="${iterationStatus.count}"></td>
+                <td th:text="${sertifikasiKaryawan.sertifikasi.nama}"></td>
+                <td th:text="${sertifikasiKaryawan.noSetifikasi}"></td>
+                <td th:text="${sertifikasiKaryawan.tanggalPengambilan}"></td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </table>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

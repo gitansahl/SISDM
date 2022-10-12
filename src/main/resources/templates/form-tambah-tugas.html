@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <title>Tambah Tugas</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar('tugas')"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content">
+        <form th:action="@{/tambah-tugas}" th:object="${tugas}" method="POST">
+          <table class="table table-borderless">
+            <thead>
+            <th class="pb-5">
+              <h2>Tambah Tugas</h2>
+            </th>
+            </thead>
+            <br>
+            <tbody>
+            <tr>
+              <td colspan="2">
+                <h3>Nama Tugas</h3>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <input class="form-control" type="text" placeholder="Nama Tugas" th:field="*{nama}"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h3>Deskripsi</h3>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <input class="form-control" placeholder="Deskripsi Tugas" type="text" th:field="*{deskripsi}"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h3>Story Point</h3>
+              </td>
+              <td>
+                <h3>Status</h3>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input class="form-control" type="text" placeholder="Story Point" th:field="*{storyPoint}"/>
+              </td>
+              <td>
+                <select class="form-control" th:field="*{status}">
+                  <option value="0">Dimulai</option>
+                  <option value="1">Dikerjakan</option>
+                  <option value="2">Selesai</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="row">
+                  <div class="col">
+                    <button class="btn btn-primary" type="submit" name="save">Submit</button>
+                  </div>
+                  <div class="col">
+                    <a class="btn btn-primary" href="/">Home</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

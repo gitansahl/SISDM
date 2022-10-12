@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Detail Presensi</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar('presensi')"></nav>
+<div class="container">
+  <div class="justify-content-center">
+    <a th:href="@{/presensi}">Back</a>
+    <h2>Detail Presensi</h2>
+    <a class="btn btn-warning" th:href="@{/presensi/} + ${presensi.idPresensi} + @{/ubah}">Edit</a>
+  </div>
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <table class="table table-borderless">
+          <tr>
+            <td>
+              <div>
+                <h4>Nama Karyawan</h4>
+              </div>
+            </td>
+            <td>
+              <div>
+                <p th:text="${presensi.karyawan.namaDepan} + ' ' + ${presensi.karyawan.namaBelakang}"></p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div>
+                <h4>Tanggal Presensi</h4>
+              </div>
+            </td>
+            <td>
+              <div>
+                <p th:text="${#temporals.format(presensi.tanggal,'d MMMM yyyy')}"></p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div>
+                <h4>Waktu Masuk</h4>
+              </div>
+            </td>
+            <td>
+              <div>
+                <p th:text="${presensi.waktuMasuk}"></p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div>
+                <h4>Waktu Keluar</h4>
+              </div>
+            </td>
+            <td>
+              <div>
+                <p th:text="${presensi.waktuKeluar}"></p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div>
+                <h4>Status</h4>
+              </div>
+            </td>
+            <td>
+              <div>
+                <p th:if="${presensi.status} == 0">TERLAMBAT</p>
+                <p th:unless="${presensi.status} == 0">TEPAT WAKTU</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <table class="table-striped">
+                <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama</th>
+                  <th>Deskripsi</th>
+                  <th>Story Point</th>
+                  <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="tugas, iterationStatus : ${presensi.listTugas}">
+                  <td th:text="${iterationStatus.count}"></td>
+                  <td th:text="${tugas.nama}"></td>
+                  <td th:text="${tugas.deskripsi}"></td>
+                  <td th:if="${tugas.status} == 0" th:text="'DIMULAI'"></td>
+                  <td th:if="${tugas.status} == 1" th:text="'DIKERJAKAN'"></td>
+                  <td th:if="${tugas.status} == 2" th:text="'SELESAI'"></td>
+                </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
